@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 
 class CountryResults(
-    @SerializedName("result")
+    @SerializedName("response")
     val countryList: List<Country>
 )

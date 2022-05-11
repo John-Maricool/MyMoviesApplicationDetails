@@ -3,14 +3,10 @@ Y
 )app/src/main/res/layout/activity_main.xml,7\6\76b07e40f24cce093536731477540f12e7da3cb6
 o
 ?app/src/main/java/com/maricoolsapps/sportsapplication/ui/App.kt,9\f\9f255a4ac813ce3d171ab049e310afefa415779b
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 ’
 bapp/src/main/java/com/maricoolsapps/sportsapplication/data/models/apibase/leagues/LeagueResults.kt,1\e\1eba149a897f4202a031ab245e411bb4acbbe231
 ‹
 [app/src/main/java/com/maricoolsapps/sportsapplication/data/models/apibase/leagues/League.kt,2\0\20e6a49da400cfaa574f1f5b9e5bd803136fb39e
-x
-Happ/src/main/java/com/maricoolsapps/sportsapplication/utils/Constants.kt,0\4\0435cc2429af3a6c7d720113c67a2db4ae427b06
 —
 gapp/src/main/java/com/maricoolsapps/sportsapplication/data/models/apibase/livescore/LivescoreResults.kt,d\6\d6933453dc701443b8b977f30e637675b16e519b
 ”
@@ -27,13 +23,5 @@ Vapp/src/main/java/com/maricoolsapps/sportsapplication/data/models/apibase/team/
 iapp/src/main/java/com/maricoolsapps/sportsapplication/data/models/apibase/top_scorers/TopScorerDetails.kt,9\2\92958f6fafea108306907a796e44548b769aea70
 ’
 bapp/src/main/java/com/maricoolsapps/sportsapplication/data/models/apibase/top_scorers/TopScorer.kt,5\c\5c40bbe1ad9e1a3a059f82f31649d72174e9722e
-“
-capp/src/main/java/com/maricoolsapps/sportsapplication/data/models/apibase/country/CountryResults.kt,0\b\0b3c1299a457fa2c324b15d5d0d72f609d151098
-Œ
-\app/src/main/java/com/maricoolsapps/sportsapplication/data/models/apibase/country/Country.kt,0\1\01517d4fcbf85cc2d41596244e0a81d79fad4135
-x
-Happ/src/main/java/com/maricoolsapps/sportsapplication/ui/MainActivity.kt,7\d\7d5bc009dd7c5388f50359460dbc71f91a10ae7a
 u
 Eapp/src/main/java/com/maricoolsapps/sportsapplication/di/AppModule.kt,4\a\4a6a9c6c7dce47c351463562116942d11430fa50
-{
-Kapp/src/main/java/com/maricoolsapps/sportsapplication/api/SportsRequests.kt,0\c\0c32a96878ec3868cb6dc381e6a64ea5b5654685

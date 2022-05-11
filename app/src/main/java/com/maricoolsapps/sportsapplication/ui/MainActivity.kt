@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         lifecycleScope.launch {
-            val res = api.getAllCountries()
+            val res = api.getAllCountries().countryList
             Log.d("results", res.toString())
         }
     }
