@@ -1,6 +1,5 @@
 package com.maricoolsapps.sportsapplication.di
 
-import com.maricoolsapps.sportsapplication.api.SportsRequests
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
