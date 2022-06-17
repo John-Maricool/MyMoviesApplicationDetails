@@ -47,13 +47,18 @@ dependencies {
 
     //jetpack compose setup
     def nav_version = "2.4.2"
+    def glideVersion = "4.13.0"
+
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.foundation:foundation:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
-  //  implementation "androidx.compose.material:material-icone-core:$compose"
+    //  implementation "androidx.compose.material:material-icone-core:$compose"
     //implementation "androidx.compose.material:material-icone-extended:$compose"
+
+    //paging with compose
+    implementation 'androidx.paging:paging-compose:1.0.0-alpha14'
 
     //dagger hilt dependency android]
     implementation("com.google.dagger:hilt-android:2.38.1")
@@ -81,6 +86,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
 
 
     implementation 'androidx.core:core-ktx:1.7.0'

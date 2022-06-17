@@ -1,5 +1,6 @@
 package com.maricoolsapps.sportsapplication.di
 
+import com.maricoolsapps.sportsapplication.api.Api
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,16 +13,16 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
+   @Provides
     @Singleton
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
-            .baseUrl(SportsRequests.BASE_URL)
+            .baseUrl(Api.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
     @Provides
     @Singleton
-    fun provideApiRequests(retrofit: Retrofit): SportsRequests =
-        retrofit.create(SportsRequests::class.java)
+    fun provideApiRequests(retrofit: Retrofit): Api =
+        retrofit.create(Api::class.java)
 }
