@@ -1,5 +1,8 @@
 package com.maricoolsapps.sportsapplication.utils
 
+import com.maricoolsapps.sportsapplication.data.models.Cast
+import com.maricoolsapps.sportsapplication.data.models.MovieListItemModel
+
 object Constants {
 
     const val API_VERSION: Int = 3
@@ -15,6 +18,7 @@ object Constants {
     val MOVIES_ROUTE = "movies_route"
     val DETAILS_ROUTE = "details_route"
     val TVSHOWS_ROUTE = "tvshows_route"
+    val MOVIE_CATEGORY_GRID_LIST = "movie category grid list"
 
     val POPULAR_MOVIES = 0
     val IN_THEATRE_MOVIES = 1
@@ -22,4 +26,8 @@ object Constants {
     val ALL_MOVIES = 3
     val TV_SHOWS = 4
 
+}
+
+fun castsToMovieListItem(cast: Cast): MovieListItemModel {
+    return MovieListItemModel(cast.profilePath, cast.id.toLong(), cast.name)
 }

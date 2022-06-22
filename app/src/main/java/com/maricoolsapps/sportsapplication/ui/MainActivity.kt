@@ -8,6 +8,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -16,6 +17,7 @@ import com.maricoolsapps.sportsapplication.utils.BottomNavItem
 import com.maricoolsapps.sportsapplication.utils.NavigationGraph
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalComposeUiApi
 @AndroidEntryPoint
 @ExperimentalFoundationApi
 class MainActivity : AppCompatActivity() {
@@ -33,7 +35,10 @@ class MainActivity : AppCompatActivity() {
     fun MainScreenView(viewModel: MainViewModel) {
         val navController = rememberNavController()
         Scaffold(bottomBar = {
-            if (currentRoute(navController) != BottomNavItem.details.screen_route)
+            if ((currentRoute(navController) == BottomNavItem.home.screen_route) ||
+                (currentRoute(navController) == BottomNavItem.tvShows.screen_route) ||
+                (currentRoute(navController) == BottomNavItem.movies.screen_route)
+            )
                 BottomNavigation(navController = navController)
         }
         ) {

@@ -54,6 +54,7 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha02"
     //  implementation "androidx.compose.material:material-icone-core:$compose"
     //implementation "androidx.compose.material:material-icone-extended:$compose"
 
@@ -68,6 +69,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation "com.google.code.gson:gson:2.8.6"
+
+    //rating bar
+    implementation 'com.github.a914-gowtham:compose-ratingbar:1.2.3'
 
 
     //lifecycle dependencies

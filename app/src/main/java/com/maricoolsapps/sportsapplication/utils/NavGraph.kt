@@ -2,16 +2,16 @@ package com.maricoolsapps.sportsapplication.utils
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.ViewModel
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.maricoolsapps.sportsapplication.ui.MainViewModel
-import com.maricoolsapps.sportsapplication.ui.composables.DetailsScreen
-import com.maricoolsapps.sportsapplication.ui.composables.HomeScreen
-import com.maricoolsapps.sportsapplication.ui.composables.MoviesScreen
-import com.maricoolsapps.sportsapplication.ui.composables.TvShowsScreen
+import com.maricoolsapps.sportsapplication.ui.composables.*
 
+@ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @Composable
 fun NavigationGraph(
@@ -20,7 +20,7 @@ fun NavigationGraph(
 ) {
     NavHost(navController, startDestination = BottomNavItem.home.screen_route) {
         composable(BottomNavItem.home.screen_route) {
-            HomeScreen(viewModel)
+            HomeScreen(viewModel, navController)
         }
         composable(BottomNavItem.movies.screen_route) {
             MoviesScreen(viewModel, navController)
@@ -28,8 +28,31 @@ fun NavigationGraph(
         composable(BottomNavItem.tvShows.screen_route) {
             TvShowsScreen(viewModel, navController)
         }
-        composable(BottomNavItem.details.screen_route) {
-            DetailsScreen(viewModel)
+        composable("${BottomNavItem.details.screen_route}/{id}", arguments = listOf(
+            navArgument("id") {
+                type = NavType.LongType
+            }
+        )
+        ) { navBackStackEntry ->
+            DetailsScreen(
+                viewModel,
+                navController,
+                navBackStackEntry.arguments?.getLong("id") as Long
+            )
         }
+        composable(
+            "${BottomNavItem.moviesType.screen_route}/{type}", arguments = listOf(
+                navArgument("type") {
+                    type = NavType.IntType
+                }
+            )
+        ) { navBackStackEntry ->
+            MovieTypeScreen(
+                viewModel,
+                navController,
+                navBackStackEntry.arguments?.getInt("type") as Int
+            )
+        }
+
     }
 }

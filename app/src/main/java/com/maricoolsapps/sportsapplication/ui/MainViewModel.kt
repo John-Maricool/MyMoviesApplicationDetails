@@ -1,14 +1,16 @@
 package com.maricoolsapps.sportsapplication.ui
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.maricoolsapps.sportsapplication.data.models.Cast
+import com.maricoolsapps.sportsapplication.data.models.Movie
 import com.maricoolsapps.sportsapplication.data.models.MovieListItemModel
-import com.maricoolsapps.sportsapplication.data.models.MoviesListItem
-import com.maricoolsapps.sportsapplication.data.models.TvListItem
+import com.maricoolsapps.sportsapplication.data.models.Video
 import com.maricoolsapps.sportsapplication.data.repository.MovieListRepository
 import com.maricoolsapps.sportsapplication.utils.Constants.ALL_MOVIES
 import com.maricoolsapps.sportsapplication.utils.Constants.IN_THEATRE_MOVIES
@@ -29,8 +31,12 @@ class MainViewModel
     var upcomingMovieList: Flow<PagingData<MovieListItemModel>> = flowOf()
     var allMovieList: Flow<PagingData<MovieListItemModel>> = flowOf()
     var tvShowList: Flow<PagingData<MovieListItemModel>> = flowOf()
+    var singleMovie: MutableState<Movie> = mutableStateOf(Movie())
 
     val isLoading = mutableStateOf(false)
+    val movie = mutableStateOf(Movie())
+    val casts = mutableStateOf(listOf<Cast>())
+    val videos = mutableStateOf(listOf<Video>())
 
     fun getPopularMovies() {
         isLoading.value = true
@@ -106,4 +112,27 @@ class MainViewModel
         }
     }
 
+    fun getFirstMovie() {
+        viewModelScope.launch {
+            singleMovie.value = repository.getSingleMovieId()
+        }
+    }
+
+    fun getMovieDetail(id: Long) {
+        viewModelScope.launch {
+            movie.value = repository.getMovie(id)
+        }
+    }
+
+    fun getCredits(id: Long) {
+        viewModelScope.launch {
+            casts.value = repository.getCredits(id).casts
+        }
+    }
+
+    fun getVideos(id: Long) {
+        viewModelScope.launch {
+            videos.value = repository.getVideos(id).videos
+        }
+    }
 }

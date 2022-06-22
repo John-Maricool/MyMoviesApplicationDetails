@@ -2,7 +2,7 @@ package com.maricoolsapps.sportsapplication.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class CastAndCrew(
+data class Cast(
     @SerializedName("id")
     var id: Int,
 
@@ -16,10 +16,7 @@ data class CastAndCrew(
     var knownFor: String?
 )
 
-data class CastAndCrewResults(
+data class CastResults(
     @SerializedName("cast")
-    val casts: List<CastAndCrew>,
-
-    @SerializedName("crew")
-    val crew: List<CastAndCrew>
+    val casts: List<Cast>,
 )

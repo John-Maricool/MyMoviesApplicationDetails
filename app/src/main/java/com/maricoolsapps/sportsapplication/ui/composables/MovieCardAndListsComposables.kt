@@ -12,6 +12,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
@@ -25,7 +26,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.maricoolsapps.sportsapplication.R
 import com.maricoolsapps.sportsapplication.data.models.MovieListItemModel
-import com.maricoolsapps.sportsapplication.data.models.MoviesListItem
 import com.maricoolsapps.sportsapplication.utils.Constants.BASE_POSTER_URL
 import com.maricoolsapps.sportsapplication.utils.loadPicture
 import kotlinx.coroutines.flow.Flow
@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.Flow
 val DEFAULT_NEWS_IMAGE = R.drawable.ic_image_default
 
 @Composable
-private fun MovieCard(
+fun MovieCard(
     item: MovieListItemModel,
     onClick: () -> Unit
 ) {
@@ -44,7 +44,7 @@ private fun MovieCard(
             .padding(6.dp)
             .clickable(onClick = onClick)
             .background(color = Color.Black)
-            .width(40.dp),
+            .width(110.dp),
         elevation = 8.dp
     ) {
         Column {
@@ -73,7 +73,7 @@ private fun MovieCard(
                         .background(Color.Black),
                     style = TextStyle(
                         color = Color.White,
-                        fontSize = 13.sp,
+                        fontSize = 14.sp,
                         fontStyle = FontStyle(3)
                     ),
                 )
@@ -183,15 +183,14 @@ fun HomeHeaderComposable(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             text = name,
             style = TextStyle(
                 color = Color.White,
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 fontStyle = FontStyle(3)
             ),
             modifier = Modifier.padding(8.dp)
@@ -200,7 +199,7 @@ fun HomeHeaderComposable(
             text = "show all",
             style = TextStyle(
                 color = Color.White,
-                fontSize = 18.sp,
+                fontSize = 13.sp,
                 fontStyle = FontStyle(2)
             ),
             modifier = Modifier
@@ -209,7 +208,27 @@ fun HomeHeaderComposable(
                     enabled = true,
                     onClick = onClick
                 )
+                .align(CenterVertically)
         )
+    }
+}
+
+
+@Composable
+fun MovieRowListWithHeader(
+    movies: Flow<PagingData<MovieListItemModel>>,
+    onClick: (id: Long) -> Unit,
+    name: String,
+    onClickShowAll: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .background(Color.Black)
+    ) {
+        HomeHeaderComposable(name = name, onClick = onClickShowAll)
+        MovieRowListComposable(movies = movies, onClick = onClick)
     }
 }
 

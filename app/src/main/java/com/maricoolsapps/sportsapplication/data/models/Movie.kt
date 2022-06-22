@@ -38,4 +38,6 @@ data class Movie(
 
     @SerializedName("genres")
     var genres: List<Genre>?
-)
+) {
+    constructor() : this(0, null, null, "", 0, 0f, listOf(), "", "", 0, "", null)
+}

@@ -4,6 +4,7 @@ import com.maricoolsapps.sportsapplication.R
 import com.maricoolsapps.sportsapplication.utils.Constants.DETAILS_ROUTE
 import com.maricoolsapps.sportsapplication.utils.Constants.HOME_ROUTE
 import com.maricoolsapps.sportsapplication.utils.Constants.MOVIES_ROUTE
+import com.maricoolsapps.sportsapplication.utils.Constants.MOVIE_CATEGORY_GRID_LIST
 import com.maricoolsapps.sportsapplication.utils.Constants.TVSHOWS_ROUTE
 
 sealed class BottomNavItem(
@@ -13,4 +14,5 @@ sealed class BottomNavItem(
     object details : BottomNavItem("Details", R.drawable.ic_home, DETAILS_ROUTE)
     object tvShows : BottomNavItem("Movies", R.drawable.ic_tv, TVSHOWS_ROUTE)
     object movies : BottomNavItem("TV shows", R.drawable.ic_movie, MOVIES_ROUTE)
+    object moviesType : BottomNavItem("Movie Category", R.drawable.ic_movie, MOVIE_CATEGORY_GRID_LIST)
 }

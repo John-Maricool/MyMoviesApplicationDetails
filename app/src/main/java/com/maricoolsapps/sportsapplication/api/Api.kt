@@ -1,9 +1,9 @@
 package com.maricoolsapps.sportsapplication.api
 
-import com.maricoolsapps.sportsapplication.data.models.MoviesResult
-import com.maricoolsapps.sportsapplication.data.models.TvResult
+import com.maricoolsapps.sportsapplication.data.models.*
 import com.maricoolsapps.sportsapplication.utils.Constants
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
@@ -44,4 +44,27 @@ interface Api {
         @Query("api_key") key: String = Constants.API_KEY,
         @Query("page") page: Int
     ): TvResult
+
+    @GET("movie/{id}")
+    suspend fun fetchDetails(
+        @Path("id") id: Int,
+        @Query("api_key") key: String = Constants.API_KEY
+    ): Movie
+
+    @GET("movie/{id}/credits")
+    suspend fun fetchCredits(
+        @Path("id") id: Int,
+        @Query("api_key") key: String = Constants.API_KEY
+    ): CastResults
+
+    @GET("movie/{id}/videos")
+    suspend fun fetchVideos(
+        @Path("id") id: Int,
+        @Query("api_key") key: String = Constants.API_KEY
+    ): VideoResult
+
 }
+
+
+
+

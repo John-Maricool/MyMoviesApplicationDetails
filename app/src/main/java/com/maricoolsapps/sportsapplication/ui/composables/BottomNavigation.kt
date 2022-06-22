@@ -22,7 +22,7 @@ fun BottomNavigation(
         BottomNavItem.tvShows
     )
     androidx.compose.material.BottomNavigation(
-        backgroundColor = Color.Blue,
+        backgroundColor = Color.Black,
         contentColor = Color.White
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -33,8 +33,8 @@ fun BottomNavigation(
                 label = {
                     Text(text = item.title, fontSize = 9.sp)
                 },
-                selectedContentColor = Color.DarkGray,
-                unselectedContentColor = Color.Cyan,
+                selectedContentColor = Color.Red,
+                unselectedContentColor = Color.White,
                 alwaysShowLabel = true,
                 selected = currentRoute == item.screen_route,
                 onClick = {

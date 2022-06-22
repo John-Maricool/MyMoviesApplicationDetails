@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/JOHN BATISTA/AndroidStudioProjects/SportsApplication/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.1645" />
+        <entry key="..\:/Users/JOHN BATISTA/AndroidStudioProjects/SportsApplication/app/src/main/res/drawable/ic_baseline_event_24.xml" value="0.1645" />
+        <entry key="..\:/Users/JOHN BATISTA/AndroidStudioProjects/SportsApplication/app/src/main/res/drawable/ic_baseline_language_24.xml" value="0.1645" />
         <entry key="..\:/Users/JOHN BATISTA/AndroidStudioProjects/SportsApplication/app/src/main/res/layout/activity_main.xml" value="0.20989583333333334" />
       </map>
     </option>
