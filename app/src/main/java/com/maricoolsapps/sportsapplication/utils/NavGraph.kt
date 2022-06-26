@@ -1,8 +1,11 @@
 package com.maricoolsapps.sportsapplication.utils
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -18,7 +21,13 @@ fun NavigationGraph(
     navController: NavHostController,
     viewModel: MainViewModel
 ) {
-    NavHost(navController, startDestination = BottomNavItem.home.screen_route) {
+    NavHost(
+        navController,
+        startDestination = BottomNavItem.home.screen_route,
+        modifier = Modifier.background(
+            Color.Black
+        )
+    ) {
         composable(BottomNavItem.home.screen_route) {
             HomeScreen(viewModel, navController)
         }
@@ -53,6 +62,18 @@ fun NavigationGraph(
                 navBackStackEntry.arguments?.getInt("type") as Int
             )
         }
-
+        composable(
+            "${BottomNavItem.castDeails.screen_route}/{type}", arguments = listOf(
+                navArgument("type") {
+                    type = NavType.IntType
+                }
+            )
+        ) { navBackStackEntry ->
+            CastDetailsComposable(
+                viewModel,
+                navController,
+                navBackStackEntry.arguments?.getInt("type") as Int
+            )
+        }
     }
 }

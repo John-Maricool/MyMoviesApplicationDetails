@@ -58,8 +58,6 @@ class MovieListSource(
             return LoadResult.Error(e)
         }
     }
-
-
 }
 
 
@@ -77,3 +75,13 @@ fun mapAllToDataModel(data: List<MoviesListItem>): List<MovieListItemModel> {
         mapToDataModel(it)
     }
 }
+
+
+
+
+
+
+
+
+
+

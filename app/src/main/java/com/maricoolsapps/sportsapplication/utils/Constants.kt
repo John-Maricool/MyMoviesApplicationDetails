@@ -2,6 +2,7 @@ package com.maricoolsapps.sportsapplication.utils
 
 import com.maricoolsapps.sportsapplication.data.models.Cast
 import com.maricoolsapps.sportsapplication.data.models.MovieListItemModel
+import com.maricoolsapps.sportsapplication.data.models.Person
 
 object Constants {
 
@@ -17,17 +18,21 @@ object Constants {
     val HOME_ROUTE = "home_route"
     val MOVIES_ROUTE = "movies_route"
     val DETAILS_ROUTE = "details_route"
+    val CAST_ROUTE = "cast_details"
     val TVSHOWS_ROUTE = "tvshows_route"
     val MOVIE_CATEGORY_GRID_LIST = "movie category grid list"
 
-    val POPULAR_MOVIES = 0
-    val IN_THEATRE_MOVIES = 1
-    val UPCOMING_MOVIES = 2
-    val ALL_MOVIES = 3
-    val TV_SHOWS = 4
-
+    const val POPULAR_MOVIES = 0
+    const val IN_THEATRE_MOVIES = 1
+    const val UPCOMING_MOVIES = 2
+    const val ALL_MOVIES = 3
+    const val TV_SHOWS = 4
 }
 
 fun castsToMovieListItem(cast: Cast): MovieListItemModel {
     return MovieListItemModel(cast.profilePath, cast.id.toLong(), cast.name)
+}
+
+fun castsToMovieListItem(person: Person): MovieListItemModel {
+    return MovieListItemModel(person.profilePath, person.id.toLong(), person.name)
 }

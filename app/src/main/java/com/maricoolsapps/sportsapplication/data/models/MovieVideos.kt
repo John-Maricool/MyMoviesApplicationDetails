@@ -16,5 +16,5 @@ data class Video(
 
 data class VideoResult(
     @SerializedName("results")
-    val videos: List<Video>,
+    val videos: List<Video>?,
 )

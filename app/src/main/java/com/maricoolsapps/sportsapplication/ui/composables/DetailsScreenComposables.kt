@@ -22,9 +22,7 @@ import com.maricoolsapps.sportsapplication.data.models.Cast
 import com.maricoolsapps.sportsapplication.data.models.Genre
 import com.maricoolsapps.sportsapplication.data.models.IconString
 import com.maricoolsapps.sportsapplication.data.models.Video
-import com.maricoolsapps.sportsapplication.utils.Constants
-import com.maricoolsapps.sportsapplication.utils.castsToMovieListItem
-import com.maricoolsapps.sportsapplication.utils.loadPicture
+import com.maricoolsapps.sportsapplication.utils.*
 
 @Composable
 fun VideoImageComposable(video: Video, onClick: (id: String) -> Unit) {
@@ -60,18 +58,16 @@ fun VideoImageComposable(video: Video, onClick: (id: String) -> Unit) {
 
 @Composable
 fun VideoRowListComposable(
-    videos: List<Video>?,
+    videos: List<Video>,
     onClick: (key: String) -> Unit
 ) {
 
     LazyRow {
-        videos?.let {
-            items(it.size) { index ->
-                val item = videos[index]
-                item.let { video ->
-                    VideoImageComposable(video) {
-                        onClick(video.key)
-                    }
+        items(videos.size) { index ->
+            val item = videos[index]
+            item.let { video ->
+                VideoImageComposable(video) {
+                    onClick(video.key)
                 }
             }
         }
@@ -83,19 +79,19 @@ fun VideoRowListComposable(
 fun MovieDetailsTitlePart(
     movieTitle: String,
     genre: List<Genre>?,
-    votes: String,
-    rating: Float,
-    movieTime: String,
-    movieDate: String,
-    lang: String
+    votes: String?,
+    rating: Float?,
+    movieTime: Int?,
+    movieDate: String?,
+    lang: String?
 ) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         Column(modifier = Modifier.fillMaxWidth(0.7f)) {
             Text(
                 text = movieTitle,
                 fontSize = 35.sp,
                 color = Color.White,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(bottom = 8.dp, start = 8.dp)
             )
             Text(
                 text = changeGenre(genre),
@@ -103,16 +99,27 @@ fun MovieDetailsTitlePart(
                 color = Color.White,
                 modifier = Modifier.padding(8.dp)
             )
-            RatingAndVotes(rateValue = rating, votes = votes)
+            rating?.let {
+                if (votes != null) {
+                    RatingAndVotes(rateValue = it, votes = votes)
+                }
+            }
         }
+        Column(modifier = Modifier.padding(9.dp)) {
+            lang?.let {
+                val icon = IconString(R.drawable.ic_baseline_language_24, getMovieLanguage(it))
+                MovieDetailsTitleSecondPart(iconString = icon)
+            }
+            movieTime?.let {
+                val icon2 =
+                    IconString(R.drawable.ic_baseline_access_time_24, getMovieRuntime(it))
+                MovieDetailsTitleSecondPart(iconString = icon2)
+            }
+            movieDate?.let {
+                val icon3 = IconString(R.drawable.ic_baseline_event_24, it)
+                MovieDetailsTitleSecondPart(iconString = icon3)
+            }
 
-        val icon = IconString(R.drawable.ic_baseline_language_24, lang)
-        val icon2 = IconString(R.drawable.ic_baseline_access_time_24, movieTime)
-        val icon3 = IconString(R.drawable.ic_baseline_event_24, movieDate)
-        Column() {
-            MovieDetailsTitleSecondPart(iconString = icon3)
-            MovieDetailsTitleSecondPart(iconString = icon2)
-            MovieDetailsTitleSecondPart(iconString = icon)
         }
     }
 }
@@ -144,7 +151,7 @@ fun MovieImageBigComposable(imageUrl: String) {
 
 @Composable
 fun MovieDetailsTitleSecondPart(iconString: IconString) {
-    Row {
+    Row(modifier = Modifier.padding(end = 8.dp, bottom = 2.dp)) {
         Icon(
             painter = painterResource(id = iconString.icon),
             contentDescription = null,

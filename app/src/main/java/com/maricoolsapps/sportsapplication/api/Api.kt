@@ -63,6 +63,23 @@ interface Api {
         @Query("api_key") key: String = Constants.API_KEY
     ): VideoResult
 
+    @GET("person/{id}/images")
+    suspend fun fetchCastImages(
+        @Path("id") id: Int, @Query("api_key") key: String = Constants.API_KEY
+    ): PersonImagesResponse
+
+    @GET("person/{id}/combined_credits")
+    suspend fun fetchCrewCredits(
+        @Path("id") id: Int,
+        @Query("api_key") key: String = Constants.API_KEY
+    ): PersonCreditsResponse
+
+    @GET("person/{id}")
+    suspend fun fetchPersonDetails(
+        @Path("id") id: Int, @Query("api_key") key: String = Constants.API_KEY
+    ): Person
+
+
 }
 
 

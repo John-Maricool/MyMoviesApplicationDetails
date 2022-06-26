@@ -7,10 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.maricoolsapps.sportsapplication.data.models.Cast
-import com.maricoolsapps.sportsapplication.data.models.Movie
-import com.maricoolsapps.sportsapplication.data.models.MovieListItemModel
-import com.maricoolsapps.sportsapplication.data.models.Video
+import com.maricoolsapps.sportsapplication.data.models.*
 import com.maricoolsapps.sportsapplication.data.repository.MovieListRepository
 import com.maricoolsapps.sportsapplication.utils.Constants.ALL_MOVIES
 import com.maricoolsapps.sportsapplication.utils.Constants.IN_THEATRE_MOVIES
@@ -35,8 +32,12 @@ class MainViewModel
 
     val isLoading = mutableStateOf(false)
     val movie = mutableStateOf(Movie())
-    val casts = mutableStateOf(listOf<Cast>())
-    val videos = mutableStateOf(listOf<Video>())
+    val casts: MutableState<List<Cast>?> = mutableStateOf(null)
+    val videos: MutableState<List<Video>?> = mutableStateOf(null)
+
+    val person = mutableStateOf(Person())
+    val images: MutableState<List<Image>?> = mutableStateOf(null)
+    val credits: MutableState<List<Credit>?> = mutableStateOf(null)
 
     fun getPopularMovies() {
         isLoading.value = true
@@ -132,7 +133,27 @@ class MainViewModel
 
     fun getVideos(id: Long) {
         viewModelScope.launch {
-            videos.value = repository.getVideos(id).videos
+            videos.value = repository.getVideos(id)
         }
     }
+
+    fun getPersonDetails(id: Long) {
+        viewModelScope.launch {
+            person.value = repository.getPersonDetails(id)
+        }
+    }
+
+    fun getPersonImages(id: Long) {
+        viewModelScope.launch {
+            images.value = repository.getPersonPictures(id)
+        }
+    }
+
+    fun getFeaturedMovies(id: Long) {
+        viewModelScope.launch {
+            credits.value = repository.getPersonFeaturedMovies(id)
+        }
+    }
+
+
 }

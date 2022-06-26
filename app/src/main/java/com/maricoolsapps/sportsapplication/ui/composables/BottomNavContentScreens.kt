@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
@@ -31,7 +32,11 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
     viewModel.getPopularMovies()
     viewModel.getInTheatreMovies()
     viewModel.getUpcomingMovies()
-    Column(modifier = Modifier.background(Color.Black)) {
+    Column(
+        modifier = Modifier
+            .background(Color.Black)
+            .fillMaxSize()
+    ) {
         HomeScreenSingleDetail(viewModel.singleMovie.value)
         Spacer(modifier = Modifier.padding(3.dp))
         LazyColumn(
@@ -85,7 +90,11 @@ fun DetailsScreen(viewModel: MainViewModel, navController: NavHostController, id
     viewModel.getVideos(id)
     val movie = viewModel.movie.value
     val context = LocalContext.current
-    Column(modifier = Modifier.background(Color.Black)) {
+    Column(
+        modifier = Modifier
+            .background(Color.Black)
+            .fillMaxSize()
+    ) {
         movie.backdropPath?.let { MovieImageBigComposable(imageUrl = it) }
         Spacer(modifier = Modifier.padding(4.dp))
         LazyColumn(
@@ -99,34 +108,40 @@ fun DetailsScreen(viewModel: MainViewModel, navController: NavHostController, id
                     votes = movie.voteCount.toString(),
                     rating = movie.voteAverage,
                     movieDate = movie.releaseDate!!,
-                    movieTime = movie.runtime.toString(),
+                    movieTime = movie.runtime!!,
                     lang = movie.originalLanguage!!
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
                 movie.overview?.let { MovieDetailsComposable(details = it) }
                 Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = "VIDEOS",
-                    color = Color.White,
-                    fontSize = 19.sp,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-                Spacer(modifier = Modifier.padding(2.dp))
-                VideoRowListComposable(videos = viewModel.videos.value, onClick = {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW, Uri.parse("${Constants.BASE_YT_WATCH_URL}${it}")
+                viewModel.videos.value?.let {
+                    Text(
+                        text = "VIDEOS",
+                        color = Color.White,
+                        fontSize = 19.sp,
+                        modifier = Modifier.padding(start = 8.dp)
                     )
-                    context.startActivity(intent)
-                })
+                    Spacer(modifier = Modifier.padding(2.dp))
+                    VideoRowListComposable(videos = it, onClick = { link ->
+                        val intent = Intent(
+                            Intent.ACTION_VIEW, Uri.parse("${Constants.BASE_YT_WATCH_URL}${link}")
+                        )
+                        context.startActivity(intent)
+                    })
+                }
                 Spacer(modifier = Modifier.padding(2.dp))
-                Text(
-                    text = "CAST",
-                    color = Color.White,
-                    fontSize = 19.sp,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-                Spacer(modifier = Modifier.padding(2.dp))
-                CastRowListComposable(casts = viewModel.casts.value, onClick = {})
+                viewModel.casts.value?.let {
+                    Text(
+                        text = "CAST",
+                        color = Color.White,
+                        fontSize = 19.sp,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                    Spacer(modifier = Modifier.padding(2.dp))
+                    CastRowListComposable(casts = it, onClick = { id ->
+                        navController.navigate("${BottomNavItem.castDeails.screen_route}/${id}")
+                    })
+                }
             }
         }
     }
@@ -150,6 +165,28 @@ fun MovieTypeScreen(viewModel: MainViewModel, navController: NavHostController, 
             MovieGridListComposable(movies = viewModel.upcomingMovieList, onClick = {
                 navController.navigate("${BottomNavItem.details.screen_route}/$it")
             })
+        }
+    }
+}
+
+@Composable
+fun CastDetailsComposable(viewModel: MainViewModel, navController: NavHostController, type: Int) {
+    viewModel.getPersonDetails(type.toLong())
+    viewModel.getPersonImages(type.toLong())
+    viewModel.getFeaturedMovies(type.toLong())
+    val person = viewModel.person.value
+    val images = viewModel.images.value
+    Column {
+        PersonDetailsHeaderComposable(
+            person.profilePath,
+            person.name,
+            person.knownForDepartment
+        )
+        LazyColumn {
+            item {
+                BiographyComposable("Biography", person.biography)
+                images?.let { PicsRowListComposable(it) }
+            }
         }
     }
 }
