@@ -176,7 +176,8 @@ fun CastDetailsComposable(viewModel: MainViewModel, navController: NavHostContro
     viewModel.getFeaturedMovies(type.toLong())
     val person = viewModel.person.value
     val images = viewModel.images.value
-    Column {
+    val credits = viewModel.credits.value
+    Column(modifier = Modifier.padding(4.dp)) {
         PersonDetailsHeaderComposable(
             person.profilePath,
             person.name,
@@ -185,7 +186,24 @@ fun CastDetailsComposable(viewModel: MainViewModel, navController: NavHostContro
         LazyColumn {
             item {
                 BiographyComposable("Biography", person.biography)
-                images?.let { PicsRowListComposable(it) }
+                images?.let {
+                    Text(
+                        text = "IMAGES",
+                        color = Color.White,
+                        fontSize = 19.sp,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                    PicsRowListComposable(it)
+                }
+                credits?.let {
+                    Text(
+                        text = "CREDITS",
+                        color = Color.White,
+                        fontSize = 19.sp,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                    CreditsRowListComposable(it)
+                }
             }
         }
     }

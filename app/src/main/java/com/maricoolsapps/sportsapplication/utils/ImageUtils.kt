@@ -50,3 +50,45 @@ fun loadPicture(
         })
     return bitmapState
 }
+
+
+@Composable
+fun loadRoundedPicture(
+    url: String,
+    @DrawableRes defaultImg: Int
+): MutableState<Bitmap?> {
+    val bitmapState: MutableState<Bitmap?> = remember { mutableStateOf(null) }
+    Glide.with(LocalContext.current)
+        .asBitmap()
+        .load(defaultImg)
+        .into(object : CustomTarget<Bitmap>() {
+            override fun onResourceReady(
+                resource: Bitmap,
+                transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+            ) {
+                bitmapState.value = resource
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                placeholder.toString()
+            }
+        })
+
+    Glide.with(LocalContext.current)
+        .asBitmap()
+        .load(url)
+        .circleCrop()
+        .into(object : CustomTarget<Bitmap>() {
+            override fun onResourceReady(
+                resource: Bitmap,
+                transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+            ) {
+                bitmapState.value = resource
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                placeholder.toString()
+            }
+        })
+    return bitmapState
+}

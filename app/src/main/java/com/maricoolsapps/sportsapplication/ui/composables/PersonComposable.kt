@@ -13,9 +13,11 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.maricoolsapps.sportsapplication.data.models.Credit
 import com.maricoolsapps.sportsapplication.data.models.Image
 import com.maricoolsapps.sportsapplication.utils.Constants
 import com.maricoolsapps.sportsapplication.utils.loadPicture
+import com.maricoolsapps.sportsapplication.utils.loadRoundedPicture
 
 @Composable
 fun BiographyComposable(title: String, body: String) {
@@ -37,7 +39,6 @@ fun PicsRowListComposable(
 ) {
 
     Column {
-        Text(text = "Images")
         LazyRow {
             items(casts.size) { index ->
                 val item = casts[index]
@@ -54,7 +55,7 @@ fun PicsRowListComposable(
                                 .width(100.dp)
                                 .height(150.dp)
                                 .padding(4.dp),
-                            contentScale = ContentScale.Crop,
+                            contentScale = ContentScale.Inside,
                             contentDescription = "Image"
                         )
                     }
@@ -65,6 +66,42 @@ fun PicsRowListComposable(
 }
 
 @Composable
+fun CreditsRowListComposable(
+    casts: List<Credit>
+) {
+
+    Column {
+        LazyRow {
+            items(casts.size) { index ->
+                val item = casts[index]
+                item.let {
+                    val image =
+                        loadPicture(
+                            url = "${Constants.BASE_BACKDROP_URL}${it.posterPath}",
+                            defaultImg = DEFAULT_NEWS_IMAGE
+                        ).value
+                    image?.let { img ->
+                        Image(
+                            bitmap = img.asImageBitmap(),
+                            modifier = Modifier
+                                .width(100.dp)
+                                .height(150.dp)
+                                .padding(4.dp),
+                            contentScale = ContentScale.Inside,
+                            contentDescription = "Image"
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+@Composable
 fun PersonDetailsHeaderComposable(img: String?, name: String, role: String) {
     Column(modifier = Modifier.padding(8.dp)) {
         Card(
@@ -72,7 +109,7 @@ fun PersonDetailsHeaderComposable(img: String?, name: String, role: String) {
             elevation = 11.dp
         ) {
             val image =
-                loadPicture(
+                loadRoundedPicture(
                     url = "${Constants.BASE_BACKDROP_URL}${img}",
                     defaultImg = DEFAULT_NEWS_IMAGE
                 ).value
