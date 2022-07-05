@@ -6,20 +6,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.maricoolsapps.sportsapplication.ui.MainViewModel
 import com.maricoolsapps.sportsapplication.ui.composables.*
+import com.maricoolsapps.sportsapplication.ui.view_models.*
 
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @Composable
 fun NavigationGraph(
-    navController: NavHostController,
-    viewModel: MainViewModel
+    navController: NavHostController
 ) {
     NavHost(
         navController,
@@ -29,13 +29,23 @@ fun NavigationGraph(
         )
     ) {
         composable(BottomNavItem.home.screen_route) {
-            HomeScreen(viewModel, navController)
+            val viewModel = hiltViewModel<MainViewModel>()
+            HomeScreen(viewModel = viewModel, navController)
         }
         composable(BottomNavItem.movies.screen_route) {
-            MoviesScreen(viewModel, navController)
+            val viewModel = hiltViewModel<MoviesListViewModel>()
+
+            MoviesScreen(
+                viewModel = viewModel,
+                navController
+            )
         }
         composable(BottomNavItem.tvShows.screen_route) {
-            TvShowsScreen(viewModel, navController)
+            val viewModel = hiltViewModel<TvShowsListViewModel>()
+            TvShowsScreen(
+                viewModel = viewModel,
+                navController
+            )
         }
         composable("${BottomNavItem.details.screen_route}/{id}", arguments = listOf(
             navArgument("id") {
@@ -43,8 +53,10 @@ fun NavigationGraph(
             }
         )
         ) { navBackStackEntry ->
+            val viewModel = hiltViewModel<MovieDetailsViewModel>()
+
             DetailsScreen(
-                viewModel,
+                viewModel = viewModel,
                 navController,
                 navBackStackEntry.arguments?.getLong("id") as Long
             )
@@ -52,14 +64,15 @@ fun NavigationGraph(
         composable(
             "${BottomNavItem.moviesType.screen_route}/{type}", arguments = listOf(
                 navArgument("type") {
-                    type = NavType.IntType
+                    type = NavType.StringType
                 }
             )
         ) { navBackStackEntry ->
+            val viewModel = hiltViewModel<MoviesCategoryListViewModel>()
             MovieTypeScreen(
-                viewModel,
+                viewModel = viewModel,
                 navController,
-                navBackStackEntry.arguments?.getInt("type") as Int
+                navBackStackEntry.arguments?.getString("type") as String
             )
         }
         composable(
@@ -69,10 +82,26 @@ fun NavigationGraph(
                 }
             )
         ) { navBackStackEntry ->
+            val viewModel = hiltViewModel<PersonViewModel>()
             CastDetailsComposable(
-                viewModel,
+                viewModel = viewModel,
                 navController,
                 navBackStackEntry.arguments?.getInt("type") as Int
+            )
+        }
+
+        composable(
+            "${BottomNavItem.tvDetails.screen_route}/{id}", arguments = listOf(
+                navArgument("id") {
+                    type = NavType.LongType
+                }
+            )
+        ) { navBackStackEntry ->
+            val viewModel = hiltViewModel<TvDetailsViewModel>()
+            TvDetailsComposable(
+                viewModel = viewModel,
+                navController,
+                navBackStackEntry.arguments?.getLong("id")
             )
         }
     }

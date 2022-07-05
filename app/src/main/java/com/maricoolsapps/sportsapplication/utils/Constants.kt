@@ -21,18 +21,11 @@ object Constants {
     val CAST_ROUTE = "cast_details"
     val TVSHOWS_ROUTE = "tvshows_route"
     val MOVIE_CATEGORY_GRID_LIST = "movie category grid list"
+    val TV_LIST_DETAILS = "tv list details"
 
-    const val POPULAR_MOVIES = 0
-    const val IN_THEATRE_MOVIES = 1
-    const val UPCOMING_MOVIES = 2
-    const val ALL_MOVIES = 3
-    const val TV_SHOWS = 4
-}
-
-fun castsToMovieListItem(cast: Cast): MovieListItemModel {
-    return MovieListItemModel(cast.profilePath, cast.id.toLong(), cast.name)
-}
-
-fun castsToMovieListItem(person: Person): MovieListItemModel {
-    return MovieListItemModel(person.profilePath, person.id.toLong(), person.name)
+    const val POPULAR_MOVIES = "popular"
+    const val IN_THEATRE_MOVIES = "now_playing"
+    const val UPCOMING_MOVIES = "upcoming"
+    const val ALL_MOVIES = "movie"
+    const val TV_SHOWS = "tv"
 }

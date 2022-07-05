@@ -1,17 +1,17 @@
 package com.maricoolsapps.sportsapplication.ui.composables
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Shapes
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -20,7 +20,7 @@ import com.gowtham.ratingbar.RatingBarConfig
 import com.maricoolsapps.sportsapplication.data.models.Genre
 import com.maricoolsapps.sportsapplication.data.models.Movie
 import com.maricoolsapps.sportsapplication.utils.Constants
-import com.maricoolsapps.sportsapplication.utils.loadPicture
+import com.maricoolsapps.sportsapplication.utils.LoadPicture
 
 @ExperimentalComposeUiApi
 @Composable
@@ -41,13 +41,19 @@ fun HomeScreenSingleDetail(movie: Movie) {
 fun HomeScreenMovieImageAndTitle(imageUrl: String, title: String) {
     ConstraintLayout(modifier = Modifier.height(240.dp)) {
         val (imageConst, text) = createRefs()
-
-        val image =
-            loadPicture(
-                url = "${Constants.BASE_BACKDROP_URL}${imageUrl}",
-                defaultImg = DEFAULT_NEWS_IMAGE
-            ).value
-        image?.let {
+        LoadPicture(
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(imageConst) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .height(240.dp),
+            url = "${Constants.BASE_BACKDROP_URL}${imageUrl}",
+            defaultImg = DEFAULT_NEWS_IMAGE
+        )
+        /*image?.let {
             Image(
                 bitmap = it.asImageBitmap(),
                 modifier = Modifier
@@ -60,36 +66,36 @@ fun HomeScreenMovieImageAndTitle(imageUrl: String, title: String) {
                     .height(240.dp),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Image",
-            )
-        }
+            )*/
+        //}
         Text(
             text = title,
-            modifier = Modifier.constrainAs(text) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(imageConst.start)
-                end.linkTo(imageConst.end)
-            }.padding(start = 4.dp),
-            fontSize = 30.sp,
-            color = Color.White
+            modifier = Modifier
+                .constrainAs(text) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(imageConst.start)
+                    end.linkTo(imageConst.end)
+                }
+                .padding(start = 4.dp),
+            style = MaterialTheme.typography.h1
         )
     }
 }
 
 @Composable
 fun RatingAndVotes(rateValue: Float, votes: String) {
-
     Row(modifier = Modifier.padding(start = 8.dp)) {
         RatingBar(
             value = rateValue,
             onValueChange = {},
             onRatingChanged = {},
             modifier = Modifier.padding(end = 3.dp),
-            config = RatingBarConfig().size(15.dp)
+            config = RatingBarConfig().size(15.dp).activeColor(Color.Red).inactiveColor(Color.DarkGray)
         )
         Text(
             text = "$votes votes",
-            fontSize = 14.sp,
-            color = Color.White
+            style = MaterialTheme.typography.h4,
+            modifier = Modifier.align(CenterVertically)
         )
     }
 }

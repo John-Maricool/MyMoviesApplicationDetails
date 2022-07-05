@@ -22,17 +22,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @ExperimentalFoundationApi
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreenView(viewModel)
+            MainScreenView()
         }
     }
 
     @Composable
-    fun MainScreenView(viewModel: MainViewModel) {
+    fun MainScreenView() {
         val navController = rememberNavController()
         Scaffold(bottomBar = {
             if ((currentRoute(navController) == BottomNavItem.home.screen_route) ||
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 BottomNavigation(navController = navController)
         }
         ) {
-            NavigationGraph(navController = navController, viewModel = viewModel)
+            NavigationGraph(navController = navController)
         }
     }
 

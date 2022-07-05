@@ -9,10 +9,3 @@ class TvListItem(
     @SerializedName("poster_path")
     val image: String?
 )
-
-class TvResult(
-    @SerializedName("results")
-    val results: List<TvListItem>
-) {
-    constructor() : this(listOf())
-}

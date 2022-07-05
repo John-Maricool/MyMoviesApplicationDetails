@@ -10,9 +10,9 @@ class MoviesListItem(
     val image: String?
 )
 
-class MoviesResult(
+open class QueryResult<T>(
     @SerializedName("results")
-    val results: List<MoviesListItem>
-){
-    constructor():this(listOf())
+    val results: List<T>
+) {
+    constructor() : this(listOf())
 }

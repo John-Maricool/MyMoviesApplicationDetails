@@ -1,5 +1,7 @@
 package com.maricoolsapps.sportsapplication.utils
 
+import com.maricoolsapps.sportsapplication.data.models.MovieListItemModel
+import com.maricoolsapps.sportsapplication.data.models.MoviesListItem
 import java.util.*
 
 fun getMovieLanguage(languageCode: String?): String {
@@ -18,3 +20,13 @@ fun appendZeroBeforeNumber(num: Int): String {
 }
 
 fun getRuntimeDateFormat() = ("yyyy-MM-dd")
+
+fun mapToDataModel(data: MoviesListItem): MovieListItemModel {
+    return MovieListItemModel(data.image, data.id, data.title)
+}
+
+fun mapAllToDataModel(data: List<MoviesListItem>): List<MovieListItemModel> {
+    return data.map {
+        mapToDataModel(it)
+    }
+}

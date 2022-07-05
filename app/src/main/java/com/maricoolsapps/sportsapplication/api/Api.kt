@@ -12,44 +12,49 @@ interface Api {
         const val BASE_URL = "https://api.themoviedb.org/3/"
     }
 
-    @GET("movie/popular")
-    suspend fun getPopularMovies(
+    @GET("movie/{type}?page=1")
+    suspend fun getMovieFromTypeSinglePage(
+        @Path("type") type: String,
+        @Query("api_key") key: String = Constants.API_KEY
+    ): QueryResult<MoviesListItem>
+
+    @GET("movie/{type}")
+    suspend fun getMovieCategory(
+        @Path("type") type: String,
         @Query("api_key") key: String = Constants.API_KEY,
         @Query("page") page: Int
-    ): MoviesResult
+    ): QueryResult<MoviesListItem>
 
-    @GET("movie/now_playing")
-    suspend fun getInTheatreMovies(
+    @GET("discover/{movie}")
+    suspend fun getAllMoviesAndTv(
+        @Path("movie") type: String,
         @Query("api_key") key: String = Constants.API_KEY,
         @Query("page") page: Int
-    ): MoviesResult
-
-
-    @GET("movie/upcoming")
-    suspend fun getUpcomingMovies(
-        @Query("api_key") key: String = Constants.API_KEY,
-        @Query("page") page: Int
-    ): MoviesResult
-
-
-    @GET("discover/movie")
-    suspend fun getAllMovies(
-        @Query("api_key") key: String = Constants.API_KEY,
-        @Query("page") page: Int
-    ): MoviesResult
-
-
-    @GET("discover/tv")
-    suspend fun getTvShows(
-        @Query("api_key") key: String = Constants.API_KEY,
-        @Query("page") page: Int
-    ): TvResult
+    ): QueryResult<MoviesListItem>
 
     @GET("movie/{id}")
     suspend fun fetchDetails(
         @Path("id") id: Int,
         @Query("api_key") key: String = Constants.API_KEY
     ): Movie
+
+    @GET("tv/{id}")
+    suspend fun fetchTvDetails(
+        @Path("id") id: Int,
+        @Query("api_key") key: String = Constants.API_KEY
+    ): TvShowDetails
+
+    @GET("tv/{id}/credits")
+    suspend fun fetchTvCredits(
+        @Path("id") id: Int,
+        @Query("api_key") key: String = Constants.API_KEY
+    ): CastResults
+
+    @GET("tv/{id}/videos")
+    suspend fun fetchTvVideos(
+        @Path("id") id: Int,
+        @Query("api_key") key: String = Constants.API_KEY
+    ): VideoResult
 
     @GET("movie/{id}/credits")
     suspend fun fetchCredits(

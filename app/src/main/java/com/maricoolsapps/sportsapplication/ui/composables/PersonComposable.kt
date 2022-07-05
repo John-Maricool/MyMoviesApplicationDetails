@@ -1,37 +1,36 @@
 package com.maricoolsapps.sportsapplication.ui.composables
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.maricoolsapps.sportsapplication.data.models.Credit
 import com.maricoolsapps.sportsapplication.data.models.Image
 import com.maricoolsapps.sportsapplication.utils.Constants
-import com.maricoolsapps.sportsapplication.utils.loadPicture
-import com.maricoolsapps.sportsapplication.utils.loadRoundedPicture
+import com.maricoolsapps.sportsapplication.utils.LoadPicture
+import com.maricoolsapps.sportsapplication.utils.MovieCard
 
 @Composable
 fun BiographyComposable(title: String, body: String) {
-    Column(modifier = Modifier.padding(8.dp)) {
+    Column {
         Text(
             text = title,
-            color = Color.White,
-            fontSize = 25.sp,
+            style = MaterialTheme.typography.body1,
             modifier = Modifier.padding(bottom = 5.dp)
         )
-        Text(text = body, color = Color.White, fontSize = 14.sp)
+        Text(
+            text = body, style = MaterialTheme.typography.body1
+        )
     }
 }
-
 
 @Composable
 fun PicsRowListComposable(
@@ -42,24 +41,14 @@ fun PicsRowListComposable(
         LazyRow {
             items(casts.size) { index ->
                 val item = casts[index]
-                item.let {
-                    val image =
-                        loadPicture(
-                            url = "${Constants.BASE_BACKDROP_URL}${it.filePath}",
-                            defaultImg = DEFAULT_NEWS_IMAGE
-                        ).value
-                    image?.let { img ->
-                        Image(
-                            bitmap = img.asImageBitmap(),
-                            modifier = Modifier
-                                .width(100.dp)
-                                .height(150.dp)
-                                .padding(4.dp),
-                            contentScale = ContentScale.Inside,
-                            contentDescription = "Image"
-                        )
-                    }
-                }
+                LoadPicture(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(150.dp)
+                        .padding(4.dp),
+                    url = "${Constants.BASE_BACKDROP_URL}${item.filePath}",
+                    defaultImg = DEFAULT_NEWS_IMAGE
+                )
             }
         }
     }
@@ -67,65 +56,52 @@ fun PicsRowListComposable(
 
 @Composable
 fun CreditsRowListComposable(
-    casts: List<Credit>
+    casts: List<Credit>,
+    onClick: (id: Int) -> Unit
 ) {
 
     Column {
         LazyRow {
             items(casts.size) { index ->
                 val item = casts[index]
-                item.let {
-                    val image =
-                        loadPicture(
-                            url = "${Constants.BASE_BACKDROP_URL}${it.posterPath}",
-                            defaultImg = DEFAULT_NEWS_IMAGE
-                        ).value
-                    image?.let { img ->
-                        Image(
-                            bitmap = img.asImageBitmap(),
-                            modifier = Modifier
-                                .width(100.dp)
-                                .height(150.dp)
-                                .padding(4.dp),
-                            contentScale = ContentScale.Inside,
-                            contentDescription = "Image"
-                        )
-                    }
+
+                MovieCard(url = item.posterPath, text = item.title) {
+                    onClick(item.id)
                 }
             }
         }
     }
 }
 
-
-
-
-
 @Composable
-fun PersonDetailsHeaderComposable(img: String?, name: String, role: String) {
+fun PersonDetailsHeaderComposable(
+    img: String?, name: String, role: String
+) {
     Column(modifier = Modifier.padding(8.dp)) {
         Card(
-            shape = MaterialTheme.shapes.large,
+            shape = CircleShape,
             elevation = 11.dp
         ) {
-            val image =
-                loadRoundedPicture(
-                    url = "${Constants.BASE_BACKDROP_URL}${img}",
-                    defaultImg = DEFAULT_NEWS_IMAGE
-                ).value
-            image?.let {
-                Image(
-                    bitmap = it.asImageBitmap(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(240.dp),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = "Image"
-                )
-            }
+            LoadPicture(
+                modifier = Modifier
+                    .width(140.dp)
+                    .height(140.dp),
+                url = "${Constants.BASE_BACKDROP_URL}${img}",
+                defaultImg = DEFAULT_NEWS_IMAGE
+            )
         }
-        Text(text = name, color = Color.White, fontSize = 25.sp)
-        Text(text = role, color = Color.White, fontSize = 14.sp)
+        Text(
+            text = name, style = MaterialTheme.typography.h2
+        )
+        Text(
+            text = role, style = MaterialTheme.typography.body1,
+        )
     }
 
 }
+
+
+
+
+
+

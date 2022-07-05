@@ -1,7 +1,5 @@
 package com.maricoolsapps.sportsapplication.ui.composables
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,8 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +18,9 @@ import com.maricoolsapps.sportsapplication.data.models.Cast
 import com.maricoolsapps.sportsapplication.data.models.Genre
 import com.maricoolsapps.sportsapplication.data.models.IconString
 import com.maricoolsapps.sportsapplication.data.models.Video
-import com.maricoolsapps.sportsapplication.utils.*
+import com.maricoolsapps.sportsapplication.utils.Constants
+import com.maricoolsapps.sportsapplication.utils.LoadPicture
+import com.maricoolsapps.sportsapplication.utils.MovieCard
 
 @Composable
 fun VideoImageComposable(video: Video, onClick: (id: String) -> Unit) {
@@ -32,22 +30,13 @@ fun VideoImageComposable(video: Video, onClick: (id: String) -> Unit) {
             .width(120.dp)
             .height(70.dp)
     ) {
-        val image =
-            loadPicture(
-                url = "${Constants.BASE_YT_IMG_URL}${video.key}/hqdefault.jpg",
-                defaultImg = DEFAULT_NEWS_IMAGE
-            ).value
-        image?.let {
-            Image(
-                bitmap = it.asImageBitmap(),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black)
-                    .padding(4.dp),
-                contentScale = ContentScale.Crop,
-                contentDescription = "Image"
-            )
-        }
+        LoadPicture(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(4.dp),
+            url = "${Constants.BASE_YT_IMG_URL}${video.key}/hqdefault.jpg",
+            defaultImg = DEFAULT_NEWS_IMAGE
+        )
         Icon(
             painter = painterResource(id = R.drawable.ic_baseline_play_circle_outline_24),
             contentDescription = null,
@@ -80,46 +69,23 @@ fun MovieDetailsTitlePart(
     movieTitle: String,
     genre: List<Genre>?,
     votes: String?,
-    rating: Float?,
-    movieTime: Int?,
-    movieDate: String?,
-    lang: String?
+    rating: Float?
 ) {
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        Column(modifier = Modifier.fillMaxWidth(0.7f)) {
-            Text(
-                text = movieTitle,
-                fontSize = 35.sp,
-                color = Color.White,
-                modifier = Modifier.padding(bottom = 8.dp, start = 8.dp)
-            )
-            Text(
-                text = changeGenre(genre),
-                fontSize = 14.sp,
-                color = Color.White,
-                modifier = Modifier.padding(8.dp)
-            )
-            rating?.let {
-                if (votes != null) {
-                    RatingAndVotes(rateValue = it, votes = votes)
-                }
+    Column(modifier = Modifier.fillMaxWidth(0.65f)) {
+        Text(
+            text = movieTitle,
+            style = MaterialTheme.typography.h1,
+            modifier = Modifier.padding(bottom = 8.dp, start = 8.dp)
+        )
+        Text(
+            text = changeGenre(genre),
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.padding(8.dp)
+        )
+        rating?.let {
+            if (votes != null) {
+                RatingAndVotes(rateValue = it, votes = votes)
             }
-        }
-        Column(modifier = Modifier.padding(9.dp)) {
-            lang?.let {
-                val icon = IconString(R.drawable.ic_baseline_language_24, getMovieLanguage(it))
-                MovieDetailsTitleSecondPart(iconString = icon)
-            }
-            movieTime?.let {
-                val icon2 =
-                    IconString(R.drawable.ic_baseline_access_time_24, getMovieRuntime(it))
-                MovieDetailsTitleSecondPart(iconString = icon2)
-            }
-            movieDate?.let {
-                val icon3 = IconString(R.drawable.ic_baseline_event_24, it)
-                MovieDetailsTitleSecondPart(iconString = icon3)
-            }
-
         }
     }
 }
@@ -130,21 +96,13 @@ fun MovieImageBigComposable(imageUrl: String) {
         shape = MaterialTheme.shapes.large,
         elevation = 11.dp
     ) {
-        val image =
-            loadPicture(
-                url = "${Constants.BASE_BACKDROP_URL}${imageUrl}",
-                defaultImg = DEFAULT_NEWS_IMAGE
-            ).value
-        image?.let {
-            Image(
-                bitmap = it.asImageBitmap(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(240.dp),
-                contentScale = ContentScale.Crop,
-                contentDescription = "Image"
-            )
-        }
+        LoadPicture(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(240.dp),
+            url = "${Constants.BASE_BACKDROP_URL}${imageUrl}",
+            defaultImg = DEFAULT_NEWS_IMAGE
+        )
     }
 }
 
@@ -158,7 +116,7 @@ fun MovieDetailsTitleSecondPart(iconString: IconString) {
             modifier = Modifier.padding(end = 5.dp),
             tint = Color.White
         )
-        Text(text = iconString.str, fontSize = 14.sp, color = Color.White)
+        Text(text = iconString.str, style = MaterialTheme.typography.body2)
     }
 }
 
@@ -172,7 +130,7 @@ fun CastRowListComposable(
         items(casts.size) { index ->
             val item = casts[index]
             item.let {
-                MovieCard(item = castsToMovieListItem(it)) {
+                MovieCard(url = it.profilePath, text = it.name) {
                     onClick(it.id.toLong())
                 }
             }
@@ -180,13 +138,11 @@ fun CastRowListComposable(
     }
 }
 
-
 @Composable
 fun MovieDetailsComposable(details: String) {
     Text(
         text = details,
-        fontSize = 14.sp,
-        color = Color.White,
+        style = MaterialTheme.typography.h4,
         modifier = Modifier.padding(bottom = 10.dp, start = 8.dp)
     )
 }
