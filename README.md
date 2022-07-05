@@ -1,4 +1,13 @@
 # Movie Application
+
+<img src="https://user-images.githubusercontent.com/60844538/177402893-67b03c8a-106c-46c0-a468-81eb3053780b.png" width="250">
+
+![Screenshot_20220705-201737_1](https://user-images.githubusercontent.com/60844538/177402930-8ca39b99-b0a2-454b-8cab-33928211ee3a.png)
+
+![Screenshot_20220705-201721_1](https://user-images.githubusercontent.com/60844538/177402954-6826e505-ebf5-49ae-b1fd-320a717769d5.png)
+![Screenshot_20220705-201803_1](https://user-images.githubusercontent.com/60844538/177402970-1af8ef1d-af59-4f3c-82ad-6ef48e921215.png)
+
+
 ## Introduction
 This application is an Android Application for Movies desgined with Jetpack compose. 
 ## Technologies and Architecture
