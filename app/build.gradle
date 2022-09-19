@@ -59,6 +59,7 @@ dependencies {
     //  implementation "androidx.compose.material:material-icone-core:$compose"
     //implementation "androidx.compose.material:material-icone-extended:$compose"
 
+  //  implementation 'com.github.gundy:semver4j:0.16.4'
     //paging with compose
     implementation 'androidx.paging:paging-compose:1.0.0-alpha14'
 

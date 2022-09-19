@@ -103,23 +103,18 @@ fun RatingAndVotes(rateValue: Float, votes: String) {
 @Composable
 fun HomeSingleDetailGenres(genre: List<Genre>) {
     Row(modifier = Modifier.padding(start = 8.dp)) {
-        Text(
-            text = genre[0].name,
-            color = Color.White,
-            fontSize = 14.sp,
-            modifier = Modifier
-                .background(color = Color.Red, shape = Shapes().medium)
-                .padding(start = 5.dp, end = 5.dp)
-        )
-        Spacer(modifier = Modifier.padding(8.dp))
-        Text(
-            text = genre[1].name,
-            color = Color.White,
-            fontSize = 14.sp,
-            modifier = Modifier
-                .background(color = Color.Black, shape = Shapes().medium)
-                .padding(start = 5.dp, end = 5.dp)
-        )
+
+        genre.forEach{
+            Text(
+                text = it.name,
+                color = Color.White,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .background(color = Color.Red, shape = Shapes().medium)
+                    .padding(start = 5.dp, end = 5.dp)
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+        }
     }
 }
 

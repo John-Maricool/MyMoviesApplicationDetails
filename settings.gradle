@@ -4,17 +4,19 @@ pluginManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
-
+        maven { url 'https://repo1.maven.org/maven2' }
     }
-}
+}/*
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+       // maven { url 'https://jitpack.io' }
+        maven { url 'https://repo1.maven.org/maven2' }
+
 
     }
-}
+}*/
 rootProject.name = "Sports Application"
 include ':app'
