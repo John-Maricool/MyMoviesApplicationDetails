@@ -108,7 +108,7 @@ fun HomeSingleDetailGenres(genre: List<Genre>) {
             Text(
                 text = it.name,
                 color = Color.White,
-                fontSize = 14.sp,
+                 fontSize = 14.sp,
                 modifier = Modifier
                     .background(color = Color.Red, shape = Shapes().medium)
                     .padding(start = 5.dp, end = 5.dp)

@@ -26,7 +26,7 @@ class AllMoviesAndTvSource(
             LoadResult.Page(
                 data = results,
                 prevKey = if (nextPage == 1) null else nextPage - 1,
-                nextKey = if (list.results.isEmpty()) null else nextPage + 1
+                nextKey = if (results.isEmpty()) null else nextPage + 1
             )
         } catch (e: Exception) {
             return LoadResult.Error(e)

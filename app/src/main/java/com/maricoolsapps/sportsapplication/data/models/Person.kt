@@ -16,7 +16,7 @@ data class Person(
     var knownForDepartment: String,
 
     @SerializedName("biography")
-    var biography: String
+    var biography: String?
 ){
     constructor(): this(0, "", "", "" ,"")
 }

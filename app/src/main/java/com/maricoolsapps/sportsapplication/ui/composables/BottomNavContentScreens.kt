@@ -104,7 +104,7 @@ fun TvShowsScreen(
             .background(Color.Black)
             .fillMaxSize()
     ) {
-        AppBar(title = "Movies", navController = navController)
+        AppBar(title = "TV shows", navController = navController)
         ShowContent(isConnected = viewModel.isConnected) {
             MovieGridListComposable(movies = viewModel.tvShowList, onClick = {
                 navController.navigate("${BottomNavItem.tvDetails.screen_route}/$it")
@@ -260,7 +260,7 @@ fun CastDetailsComposable(
             )
             LazyColumn(modifier = Modifier.padding(3.dp)) {
                 item {
-                    BiographyComposable("Biography", person.biography)
+                    person.biography?.let { BiographyComposable("Biography", it) }
                     Spacer(modifier = Modifier.padding(5.dp))
                     images?.let {
                         Text(
@@ -353,31 +353,35 @@ fun TvDetailsComposable(
                     movie.overview.let { MovieDetailsComposable(details = it) }
                     Spacer(modifier = Modifier.padding(4.dp))
                     viewModel.videos.value?.let {
-                        Text(
-                            text = "VIDEOS",
-                            style = MaterialTheme.typography.body1,
-                            modifier = Modifier.padding(start = 8.dp)
-                        )
-                        Spacer(modifier = Modifier.padding(2.dp))
-                        VideoRowListComposable(videos = it, onClick = { link ->
-                            val intent = Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("${Constants.BASE_YT_WATCH_URL}${link}")
+                        if (it.isNotEmpty()) {
+                            Text(
+                                text = "VIDEOS",
+                                style = MaterialTheme.typography.body1,
+                                modifier = Modifier.padding(start = 8.dp)
                             )
-                            context.startActivity(intent)
-                        })
+                            Spacer(modifier = Modifier.padding(2.dp))
+                            VideoRowListComposable(videos = it, onClick = { link ->
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("${Constants.BASE_YT_WATCH_URL}${link}")
+                                )
+                                context.startActivity(intent)
+                            })
+                        }
                     }
                     Spacer(modifier = Modifier.padding(2.dp))
                     viewModel.casts.value?.let {
-                        Text(
-                            text = "CAST",
-                            style = MaterialTheme.typography.body1,
-                            modifier = Modifier.padding(start = 8.dp)
-                        )
-                        Spacer(modifier = Modifier.padding(2.dp))
-                        CastRowListComposable(casts = it, onClick = { id ->
-                            navController.navigate("${BottomNavItem.castDeails.screen_route}/${id}")
-                        })
+                        if (it.isNotEmpty()) {
+                            Text(
+                                text = "CAST",
+                                style = MaterialTheme.typography.body1,
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                            Spacer(modifier = Modifier.padding(2.dp))
+                            CastRowListComposable(casts = it, onClick = { id ->
+                                navController.navigate("${BottomNavItem.castDeails.screen_route}/${id}")
+                            })
+                        }
                     }
                 }
             }
